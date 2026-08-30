@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../features/auth/login_screen.dart';
 import '../features/earnings/earnings_screen.dart';
 import '../features/more/more_screen.dart';
+import '../features/pod/pod_camera_screen.dart';
 import '../features/today/today_screen.dart';
 import '../l10n/app_localizations.dart';
 import '../state/auth_controller.dart';
@@ -61,7 +62,8 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: '/pod/:taskUuid',
-        builder: (_, _) => const PlaceholderScreen('POD'),
+        builder: (_, state) =>
+            PodCameraScreen(taskUuid: state.pathParameters['taskUuid']!),
       ),
     ],
   );
