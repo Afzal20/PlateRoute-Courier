@@ -12,7 +12,7 @@ import '../storage/json_store.dart';
 /// Actions persist via [JsonStore] (atomic temp+rename) and flush when
 /// connectivity returns or the user taps manual retry. State chips stay
 /// honest: `pending` (Local-saved) -> `sent` (Synced) -> `failed`.
-enum QueueActionType { claimOffer, declineOffer, tripAction, pingBatch }
+enum QueueActionType { claimOffer, declineOffer, tripAction, pingBatch, shiftToggle, profileUpdate }
 
 enum QueueItemState { pending, sending, sent, failed }
 
@@ -165,6 +165,15 @@ class OfflineQueue {
       case QueueActionType.pingBatch:
         await _api.send<void>(
           (dio) => dio.post('delivery/pings/', data: {'pings': item.payload['pings']}),
+        );
+      case QueueActionType.shiftToggle:
+        await _api.send<void>(
+          (dio) => dio.put('delivery/profile/',
+              data: {'online': item.payload['online'] == true}),
+        );
+      case QueueActionType.profileUpdate:
+        await _api.send<void>(
+          (dio) => dio.put('delivery/profile/', data: item.payload),
         );
     }
   }

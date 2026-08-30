@@ -25,6 +25,21 @@ class CourierProfile {
   final bool isOnline;
   final DateTime? lastOnlineAt;
 
+  CourierProfile copyWith({
+    VehicleType? vehicle,
+    String? plate,
+    String? license,
+    bool? isOnline,
+    DateTime? lastOnlineAt,
+  }) =>
+      CourierProfile(
+        vehicle: vehicle ?? this.vehicle,
+        plate: plate ?? this.plate,
+        license: license ?? this.license,
+        isOnline: isOnline ?? this.isOnline,
+        lastOnlineAt: lastOnlineAt ?? this.lastOnlineAt,
+      );
+
   factory CourierProfile.fromJson(Map<String, Object?> json) => CourierProfile(
         vehicle: VehicleType.values.firstWhere(
           (v) => v.name == json['vehicle'],
