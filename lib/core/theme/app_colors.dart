@@ -16,4 +16,19 @@ class AppColors {
   
   static const Color textPrimaryDark = Color(0xFFF1F5FB);
   static const Color textSecondaryDark = Color(0xFFA9B6C9);
+
+  // Light Mode
+  static const Color lightCanvas = Color(0xFFF8FAFC);
+  static const Color lightSurface = Color(0xFFFFFFFF);
+  static const Color lightBorder = Color(0xFFE2E8F0);
+  static const Color lightPrimary = Color(0xFF2563EB);
+  
+  static const Color ctaBackgroundLight = Color(0xFF2563EB);
+  
+  static const Color successLight = Color(0xFF16A34A);
+  static const Color warningLight = Color(0xFFD97706);
+  static const Color dangerLight = Color(0xFFDC2626);
+  
+  static const Color textPrimaryLight = Color(0xFF0F172A);
+  static const Color textSecondaryLight = Color(0xFF475569);
 }
