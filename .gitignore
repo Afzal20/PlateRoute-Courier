@@ -51,3 +51,6 @@ app.*.map.json
 .env
 .env.local
 .env.*.local
+
+# Generated l10n
+lib/l10n/app_localizations*.dart
