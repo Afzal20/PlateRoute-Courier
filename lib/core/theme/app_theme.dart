@@ -125,7 +125,7 @@ abstract final class AppTheme {
             EdgeInsets.symmetric(horizontal: Spacing.l, vertical: Spacing.l),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
-          side: BorderSide(color: border, width: AppTokens.borderStroke),
+          borderSide: BorderSide(color: border, width: AppTokens.borderStroke),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
@@ -133,7 +133,7 @@ abstract final class AppTheme {
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
-          side: BorderSide(color: AppTokens.danger, width: AppTokens.borderStroke),
+          borderSide: BorderSide(color: AppTokens.danger, width: AppTokens.borderStroke),
         ),
       ),
       snackBarTheme: SnackBarThemeData(
