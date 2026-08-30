@@ -12,3 +12,4 @@ class SettingsScreen extends StatelessWidget {
           ListTile(title: Text('Ping Interval')),
           // Implement settings part 1
           // Implement settings part 2
+          // Implement settings part 3
