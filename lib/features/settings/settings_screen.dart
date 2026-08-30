@@ -10,3 +10,4 @@ class SettingsScreen extends StatelessWidget {
       body: ListView(
         children: const [
           ListTile(title: Text('Ping Interval')),
+          // Implement settings part 1
