@@ -7,6 +7,7 @@ import '../core/storage/json_store.dart';
 import '../data/models/active_task.dart';
 import '../data/models/offer.dart';
 import 'app_providers.dart';
+import 'earnings_controller.dart';
 
 /// The claimed task (MOB-CUR-03/04): stage transitions, offline tolerance,
 /// and persistence so an app kill mid-trip never loses the shift.
@@ -54,6 +55,7 @@ class ActiveTaskController extends Notifier<ActiveTask?> {
       await ref
           .read(taskLogRepositoryProvider)
           .recordStage(task.taskUuid, updated.stage);
+      ref.invalidate(earningsProvider);
       return StageResult.advanced;
     } on ApiException catch (e) {
       if (e.isNetwork) {
