@@ -13,3 +13,4 @@ class SettingsScreen extends StatelessWidget {
           // Implement settings part 1
           // Implement settings part 2
           // Implement settings part 3
+          // Implement settings part 4
