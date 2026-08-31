@@ -48,6 +48,7 @@ class _ScreenBorderFlashState extends State<ScreenBorderFlash> {
   @override
   Widget build(BuildContext context) {
     return Stack(
+      alignment: Alignment.topLeft,
       children: [
         widget.child,
         if (_visible)
