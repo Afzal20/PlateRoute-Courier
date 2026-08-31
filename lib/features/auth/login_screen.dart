@@ -50,6 +50,24 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     }
   }
 
+  Future<void> _handleGoogleLogin() async {
+    setState(() {
+      _busy = true;
+      _error = null;
+    });
+    final success = await ref.read(authProvider.notifier).loginWithGoogle();
+    if (!mounted) return;
+    if (!success) {
+      setState(() {
+        _error = 'Google Login failed.';
+        _busy = false;
+      });
+    } else {
+      // The auth listener will redirect when signed in.
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -112,9 +130,19 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 padding: EdgeInsets.all(Spacing.l),
                 child: _busy
                     ? const Center(child: CircularProgressIndicator())
-                    : FilledButton(
-                        onPressed: _submit,
-                        child: Text(l10n.loginBtn),
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          FilledButton(
+                            onPressed: _submit,
+                            child: Text(l10n.loginBtn),
+                          ),
+                          SizedBox(height: Spacing.m),
+                          OutlinedButton(
+                            onPressed: _handleGoogleLogin,
+                            child: Text('Continue with Google'),
+                          ),
+                        ],
                       ),
               ),
             ],

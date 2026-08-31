@@ -7,6 +7,9 @@ import '../features/earnings/earnings_screen.dart';
 import '../features/more/more_screen.dart';
 import '../features/pod/pod_camera_screen.dart';
 import '../features/today/today_screen.dart';
+import '../features/history/history_screen.dart';
+import '../features/history/ticket_detail_screen.dart';
+import '../features/settings/settings_screen.dart';
 import '../l10n/app_localizations.dart';
 import '../state/auth_controller.dart';
 
@@ -49,16 +52,16 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: '/history',
-        builder: (_, _) => const PlaceholderScreen('History'),
+        builder: (_, _) => const HistoryScreen(),
       ),
       GoRoute(
         path: '/history/ticket/:uuid',
         builder: (_, state) =>
-            const PlaceholderScreen('Ticket'),
+            TicketDetailScreen(uuid: state.pathParameters['uuid']!),
       ),
       GoRoute(
         path: '/settings',
-        builder: (_, _) => const PlaceholderScreen('Settings'),
+        builder: (_, _) => const SettingsScreen(),
       ),
       GoRoute(
         path: '/pod/:taskUuid',

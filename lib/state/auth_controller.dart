@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../data/models/auth.dart';
 import 'app_providers.dart';
@@ -8,6 +9,24 @@ import 'app_providers.dart';
 class AuthController extends AsyncNotifier<AppUser?> {
   @override
   Future<AppUser?> build() async {
+    Supabase.instance.client.auth.onAuthStateChange.listen((data) async {
+      final event = data.event;
+      final session = data.session;
+      if (event == AuthChangeEvent.signedIn && session != null) {
+        state = const AsyncLoading<AppUser?>();
+        try {
+          final user = await ref.read(authRepositoryProvider).loginWithGoogleToken(session.accessToken);
+          if (user.role != 'courier') {
+            await ref.read(authRepositoryProvider).onboardCourierRole();
+            state = AsyncData<AppUser?>(await ref.read(authRepositoryProvider).profile());
+          } else {
+            state = AsyncData<AppUser?>(user);
+          }
+        } catch (e, st) {
+          state = AsyncError<AppUser?>(e, st);
+        }
+      }
+    });
     return ref.read(authRepositoryProvider).tryRestoreSession();
   }
 
@@ -25,6 +44,19 @@ class AuthController extends AsyncNotifier<AppUser?> {
     } on Object catch (e, st) {
       state = AsyncError<AppUser?>(e, st);
       rethrow;
+    }
+  }
+
+  Future<bool> loginWithGoogle() async {
+    state = const AsyncLoading<AppUser?>();
+    try {
+      return await Supabase.instance.client.auth.signInWithOAuth(
+        OAuthProvider.google,
+        redirectTo: 'plateroutecourier://login-callback',
+      );
+    } catch (e, st) {
+      state = AsyncError<AppUser?>(e, st);
+      return false;
     }
   }
 

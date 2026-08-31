@@ -1,90 +1,71 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SettingsScreen extends StatelessWidget {
+import '../../state/settings_controller.dart';
+import '../../core/theme/tokens.dart';
+
+class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final settings = ref.watch(settingsProvider);
+    final notifier = ref.read(settingsProvider.notifier);
+
     return Scaffold(
       appBar: AppBar(title: const Text('Settings')),
       body: ListView(
-        children: const [
-          ListTile(title: Text('Ping Interval')),
-          // Implement settings part 1
-          // Implement settings part 2
-          // Implement settings part 3
-          // Implement settings part 4
-          // Implement settings part 5
-          // Implement settings part 6
-          // Implement settings part 7
-          // Implement settings part 8
-          // Implement settings part 9
-          // Implement settings part 10
-          // Implement settings part 11
-          // Implement settings part 12
-          // Implement settings part 13
-          // Implement settings part 14
-          // Implement settings part 15
-          // Implement settings part 16
-          // Implement settings part 17
-          // Implement settings part 18
-          // Implement settings part 19
-          // Implement settings part 20
-          // Implement settings part 21
-          // Implement settings part 22
-          // Implement settings part 23
-          // Implement settings part 24
-          // Implement settings part 25
-          // Implement settings part 26
-          // Implement settings part 27
-          // Implement settings part 28
-          // Implement settings part 29
-          // Implement settings part 30
-          // Implement settings part 31
-          // Implement settings part 32
-          // Implement settings part 33
-          // Implement settings part 34
-          // Implement settings part 35
-          // Implement settings part 36
-          // Implement settings part 37
-          // Implement settings part 38
-          // Implement settings part 39
-          // Implement settings part 40
-          // Implement settings part 41
-          // Implement settings part 42
-          // Implement settings part 43
-          // Implement settings part 44
-          // Implement settings part 45
-          // Implement settings part 46
-          // Implement settings part 47
-          // Implement settings part 48
-          // Implement settings part 49
-          // Implement settings part 50
-          // Implement settings part 51
-          // Implement settings part 52
-          // Implement settings part 53
-          // Implement settings part 54
-          // Implement settings part 55
-          // Implement settings part 56
-          // Implement settings part 57
-          // Implement settings part 58
-          // Implement settings part 59
-          // Implement settings part 60
-          // Implement settings part 61
-          // Implement settings part 62
-          // Implement settings part 63
-          // Implement settings part 64
-          // Implement settings part 65
-          // Implement settings part 66
-          // Implement settings part 67
-          // Implement settings part 68
-          // Implement settings part 69
-          // Implement settings part 70
-          // Implement settings part 71
-          // Implement settings part 72
-          // Implement settings part 73
-          // Implement settings part 74
-          // Implement settings part 75
+        padding: EdgeInsets.all(Spacing.m),
+        children: [
+          SwitchListTile(
+            title: const Text('Dark Mode'),
+            subtitle: const Text('Optimize for night riding'),
+            value: settings.themeMode == ThemeMode.dark,
+            onChanged: (val) {
+              notifier.setThemeMode(val ? ThemeMode.dark : ThemeMode.light);
+            },
+          ),
+          SwitchListTile(
+            title: const Text('Gloves Mode'),
+            subtitle: const Text('Increases touch targets for thick gloves'),
+            value: settings.glovesMode,
+            onChanged: (val) {
+              notifier.setGlovesMode(val);
+            },
+          ),
+          const Divider(),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: Spacing.m, vertical: Spacing.s),
+            child: const Text('Ping Interval (Location Tracking)', style: TextStyle(fontWeight: FontWeight.bold)),
+          ),
+          RadioListTile<PingIntervalPreset>(
+            title: const Text('High (5s)'),
+            subtitle: const Text('Most accurate, high battery drain'),
+            value: PingIntervalPreset.high,
+            groupValue: settings.pingInterval,
+            onChanged: (val) => notifier.setPingInterval(val!),
+          ),
+          RadioListTile<PingIntervalPreset>(
+            title: const Text('Balanced (10s)'),
+            subtitle: const Text('Good balance of tracking and battery'),
+            value: PingIntervalPreset.balanced,
+            groupValue: settings.pingInterval,
+            onChanged: (val) => notifier.setPingInterval(val!),
+          ),
+          RadioListTile<PingIntervalPreset>(
+            title: const Text('Saver (30s)'),
+            subtitle: const Text('Saves battery, less accurate ETA'),
+            value: PingIntervalPreset.saver,
+            groupValue: settings.pingInterval,
+            onChanged: (val) => notifier.setPingInterval(val!),
+          ),
+          RadioListTile<PingIntervalPreset>(
+            title: const Text('Off'),
+            subtitle: const Text('Tracking disabled'),
+            value: PingIntervalPreset.off,
+            groupValue: settings.pingInterval,
+            onChanged: (val) => notifier.setPingInterval(val!),
+          ),
         ],
       ),
     );

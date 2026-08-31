@@ -38,6 +38,19 @@ class AuthRepository {
     return _cachedUser!;
   }
 
+  Future<AppUser> loginWithGoogleToken(String accessToken) async {
+    final data = await _api.send<Map<String, Object?>>(
+      (dio) => dio.post('/api/auth/google/login/', data: {'access_token': accessToken}),
+    );
+    await _tokens.save(
+      access: data['access'] as String,
+      refresh: data['refresh'] as String,
+    );
+    _cachedUser =
+        AppUser.fromJson((data['user'] as Map).cast<String, Object?>());
+    return _cachedUser!;
+  }
+
   /// FR-AUTH-07: attach the courier role to a fresh account.
   Future<void> onboardCourierRole() async {
     await _api.send<void>(

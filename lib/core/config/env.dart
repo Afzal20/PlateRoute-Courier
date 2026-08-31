@@ -23,6 +23,8 @@ class Env {
       dotenv.maybeGet('MAP_TILE_URL_TEMPLATE') ?? '';
   static String get osrmBaseUrl => dotenv.maybeGet('OSRM_BASE_URL') ?? '';
   static String get sentryDsn => dotenv.maybeGet('SENTRY_DSN') ?? '';
+  static String get supabaseUrl => dotenv.maybeGet('NEXT_PUBLIC_SUPABASE_URL') ?? dotenv.maybeGet('SUPABASE_URL') ?? '';
+  static String get supabaseAnonKey => dotenv.maybeGet('NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY') ?? dotenv.maybeGet('SUPABASE_ANON_KEY') ?? '';
 
   /// Default ping cadence for the foreground service (NFR-16 battery honesty).
   static int get pingIntervalSeconds =>
